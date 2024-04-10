@@ -6,8 +6,6 @@ abstract class Component
 {
     protected $key = 0;
 
-    protected $currentElementId = 0;
-
     protected $links = [];
 
     protected $vars = [];
@@ -15,11 +13,6 @@ abstract class Component
     public function setKey($key)
     {
         $this->key = $key;
-    }
-
-    protected function generateId()
-    {
-        return md5(static::class . '-' . $this->key . '-' . $this->currentElementId++);
     }
 
     abstract public function template();
@@ -53,7 +46,7 @@ abstract class Component
 
     public function tag($name, $var, $jsUpdateCallback = null, $content = '', $attributes = [])
     {
-        $id = $this->generateId();
+        $id = uniqid();
         $this->links[$var][$id] = $jsUpdateCallback;
         $this->vars[$var] = null;
 
@@ -67,15 +60,5 @@ abstract class Component
         $tag->setContent($content);
 
         return $tag->build();
-    }
-
-    public function span($var, $attributes = [])
-    {
-        return $this->tag('span', $var, '(el, value) => el.textContent = value', null, $attributes);
-    }
-
-    public function input($var)
-    {
-        return $this->tag('input', $var, '(el, value) => el.value = value');
     }
 }
