@@ -4,8 +4,6 @@ namespace Arutyunyan\Karox;
 
 abstract class Component
 {
-    protected $selfClosingTags = ['input'];
-
     protected $key = 0;
 
     protected $currentElementId = 0;
@@ -53,7 +51,7 @@ abstract class Component
         ob_end_flush();
     }
 
-    public function tag($tag, $var, $jsUpdateCallback = null, $content = '', $attributes = [])
+    public function tag($name, $var, $jsUpdateCallback = null, $content = '', $attributes = [])
     {
         $id = $this->generateId();
         $this->links[$var][$id] = $jsUpdateCallback;
@@ -63,22 +61,12 @@ abstract class Component
             $this->links[$attribute][$id] = "(el, value) => el.setAttribute('$attribute', value)";
             $this->vars[$attribute] = null;
         }
-        
-        if (in_array($tag, $this->selfClosingTags)) {
-            return "<$tag id=\"$id\"/>";
-        }
-        else {
-            return "<$tag id=\"$id\">$content</$tag>";
-        }
-    }
 
-    public function attribute($attribute, $var)
-    {
-        $id = $this->generateId();
-        $this->links[$var][$id] = "(el, value) => el.setAttribute('$attribute', value)";
-        $this->vars[$var] = null;
+        $tag = new Tag($name);
+        $tag->setAttributes(array_merge($attributes, ['id' => $id]));
+        $tag->setContent($content);
 
-        return " id=\"$id\" ";
+        return $tag->build();
     }
 
     public function span($var, $attributes = [])
