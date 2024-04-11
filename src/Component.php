@@ -4,7 +4,7 @@ namespace Arutyunyan\Karox;
 
 abstract class Component
 {
-    protected $key = 0;
+    protected $key = 'scope';
 
     protected $links = [];
 
@@ -23,6 +23,11 @@ abstract class Component
         $this->key = $key;
 
         return $this;
+    }
+
+    public function getKey()
+    {
+        return $this->key;
     }
 
     protected function initialize()

@@ -15,6 +15,10 @@
 
         <?=file_get_contents($this->js())?>;
 
-        <?=$global ? "global.$global = scope;" : ''?>
+        <?php
+            // TODO: Build scope of the nested components
+        ?>
+
+        <?=$this->isWithoutScope() ? "global.{$this->getKey()} = scope;" : ''?>
     })(window);
 </script>

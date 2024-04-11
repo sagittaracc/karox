@@ -12,4 +12,9 @@ trait JsScope
 
         return $this;
     }
+
+    public function isWithoutScope()
+    {
+        return $this->withScope === false;
+    }
 }
