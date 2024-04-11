@@ -4,6 +4,9 @@ namespace Arutyunyan\Karox;
 
 abstract class RootComponent extends Component
 {
-    protected function buildJs()
-    {}
+    protected function finitialize()
+    {
+        // TODO: build js
+        // TODO: build css
+    }
 }

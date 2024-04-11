@@ -23,19 +23,25 @@ abstract class Component
         $this->key = $key;
     }
 
+    protected function initialize()
+    {}
+
+    protected function finitialize()
+    {}
+
     public function render(Component $component = null)
     {
+        $this->initialize();
+
         if ($component) {
             $component->render();
             $this->nestedComponents[] = $component;
         }
         else {
-            $this->template();
+            require $this->template();
         }
 
-        if ($this instanceof RootComponent) {
-            $this->buildJs();
-        }
+        $this->finitialize();
     }
 
     use Directive;
