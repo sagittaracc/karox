@@ -4,8 +4,6 @@ namespace Arutyunyan\Karox;
 
 abstract class Component
 {
-    use Directive;
-
     protected $key = 0;
 
     protected $links = [];
@@ -33,4 +31,7 @@ abstract class Component
 
         if ($wrapper) echo "</$wrapper>";
     }
+
+    use Directive;
+    use JsScope;
 }
