@@ -10,6 +10,8 @@ abstract class Component
 
     protected $vars = [];
 
+    protected $nestedComponents = [];
+
     abstract public function template();
 
     abstract public function js();
@@ -21,15 +23,10 @@ abstract class Component
         $this->key = $key;
     }
 
-    public function render($wrapper = null)
+    public function render()
     {
-        if ($wrapper) echo "<$wrapper>";
-
-        require 'Css.php';
         require $this->template();
         require 'Js.php';
-
-        if ($wrapper) echo "</$wrapper>";
     }
 
     use Directive;

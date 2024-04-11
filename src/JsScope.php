@@ -9,5 +9,7 @@ trait JsScope
     public function withoutScope()
     {
         $this->withScope = false;
+
+        return $this;
     }
 }
