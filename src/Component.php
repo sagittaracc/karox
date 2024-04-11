@@ -23,10 +23,19 @@ abstract class Component
         $this->key = $key;
     }
 
-    public function render()
+    public function render(Component $component = null)
     {
-        require $this->template();
-        require 'Js.php';
+        if ($component) {
+            $component->render();
+            $this->nestedComponents[] = $component;
+        }
+        else {
+            $this->template();
+        }
+
+        if ($this instanceof RootComponent) {
+            $this->buildJs();
+        }
     }
 
     use Directive;
