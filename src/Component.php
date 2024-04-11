@@ -26,7 +26,7 @@ abstract class Component
     protected function initialize()
     {}
 
-    protected function finitialize()
+    protected function terminate()
     {}
 
     public function render(Component $component = null)
@@ -41,7 +41,7 @@ abstract class Component
             require $this->template();
         }
 
-        $this->finitialize();
+        $this->terminate();
     }
 
     use Directive;
