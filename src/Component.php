@@ -21,6 +21,8 @@ abstract class Component
     public function setKey($key)
     {
         $this->key = $key;
+
+        return $this;
     }
 
     protected function initialize()
@@ -31,17 +33,15 @@ abstract class Component
 
     public function render(Component $component = null)
     {
-        $this->initialize();
-
         if ($component) {
             $component->render();
             $this->nestedComponents[] = $component;
         }
         else {
+            $this->initialize();
             require $this->template();
+            $this->terminate();
         }
-
-        $this->terminate();
     }
 
     use Directive;
