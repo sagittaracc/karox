@@ -20,4 +20,3 @@
     $jsScript = ob_get_clean();
 
     echo $this->useScope() ? '(function(global){'.$jsScript.'})(window);' : $jsScript;
-?>
