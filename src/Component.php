@@ -70,6 +70,11 @@ abstract class Component
         }
     }
 
+    public function requireJs()
+    {
+        require 'Js.php';
+    }
+
     use Directive;
     use JsScope;
 }

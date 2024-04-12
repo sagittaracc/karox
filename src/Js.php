@@ -10,7 +10,10 @@
     echo 'const '.$this->getScopeName().' = '.json_encode($scope);
     echo file_get_contents($this->js());
 
-    // TODO: Build scope of the nested components here
+    foreach ($this->nestedComponents as $nestedComponent)
+    {
+        $nestedComponent->requireJs();
+    }
 
     if ($this->isGlobal()) {
         echo 'var global = global || window';

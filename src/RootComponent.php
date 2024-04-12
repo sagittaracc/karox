@@ -6,7 +6,10 @@ abstract class RootComponent extends Component
 {
     protected function terminate()
     {
-        // TODO: build js
+        echo '<script type="text/javascript">';
+        $this->requireJs();
+        echo '</script>';
+
         // TODO: build css
     }
 }
