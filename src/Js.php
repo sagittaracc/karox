@@ -1,6 +1,8 @@
 <?php
     ob_start();
 
+    require 'js/safe.object.php';
+
     $scope = [
         'links' => $this->links,
         'vars' => $this->vars,
@@ -17,7 +19,7 @@
 
     if ($this->isGlobal()) {
         echo 'var global = global || window';
-        echo "global.{$this->getScopeName()} = {$this->getScopeName()};";
+        echo 'safeObject(global, ['.explode('\\', static::class)."], '{$this->getScopeName()}');";
     }
 
     $jsScript = ob_get_clean();
