@@ -1,18 +1,15 @@
+<?php
+    $scope = [
+        'links' => $this->links,
+        'vars' => $this->vars,
+        'set' => require 'js/scope.set.php',
+    ];
+?>
+
 <script type="text/javascript">
     <?=$this->useScope() ? '(function(global){' : ''?>
 
-        const <?=$this->getScopeName()?> = {
-            links: <?=json_encode($this->links)?>,
-            vars: <?=json_encode($this->vars)?>,
-            set: function (prop, value) {
-                let links = this.links[prop]
-
-                for (const [id, jsUpdateCallback] of Object.entries(links)) {
-                    let el = document.getElementById(id);
-                    eval(jsUpdateCallback)(el, value);
-                }
-            },
-        };
+        const <?=$this->getScopeName()?> = <?=json_encode($scope)?>;
 
         <?=file_get_contents($this->js())?>;
 
