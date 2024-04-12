@@ -1,15 +1,24 @@
 <?php
+    $scopeName = $this->getScopeName();
+    $links = json_encode($this->links);
+    $vars = json_encode($this->vars);
+
     ob_start();
 
-    require 'js/safe.object.php';
+    echo "
+        const scope = {
+            links: $links,
+            vars: $vars,
+            set: function (prop, value) {
+                let links = this.links[prop];
+                for (const [id, jsUpdateCallback] of Object.entries(links)) {
+                    let el = document.getElementById(id);
+                    eval(jsUpdateCallback)(el, value);
+                }
+            }
+        };
+    ";
 
-    $scope = [
-        'links' => $this->links,
-        'vars' => $this->vars,
-        'set' => require 'js/scope.set.php',
-    ];
-
-    echo 'const '.$this->getScopeName().' = '.json_encode($scope);
     echo file_get_contents($this->js());
 
     foreach ($this->nestedComponents as $nestedComponent)
@@ -18,8 +27,8 @@
     }
 
     if ($this->isGlobal()) {
-        echo 'var global = global || window';
-        echo 'safeObject(global, ['.explode('\\', static::class)."], '{$this->getScopeName()}');";
+        echo 'var global = global || window;';
+        echo "global.$scopeName = scope;";
     }
 
     $jsScript = ob_get_clean();

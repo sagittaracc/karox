@@ -34,6 +34,13 @@ abstract class Component
         return $this->key;
     }
 
+    public function setScopeName($scopeName)
+    {
+        $this->scopeName = $scopeName;
+
+        return $this;
+    }
+
     public function getScopeName()
     {
         return $this->scopeName;
