@@ -4,7 +4,11 @@ namespace Arutyunyan\Karox;
 
 abstract class Component
 {
-    protected $key = 'scope';
+    protected $key = 0;
+
+    protected $scopeName = 'scope';
+
+    protected $global = false;
 
     protected $links = [];
 
@@ -28,6 +32,23 @@ abstract class Component
     public function getKey()
     {
         return $this->key;
+    }
+
+    public function getScopeName()
+    {
+        return $this->scopeName;
+    }
+
+    public function setGlobal($global)
+    {
+        $this->global = $global;
+
+        return $this;
+    }
+
+    public function isGlobal()
+    {
+        return $this->global;
     }
 
     protected function initialize()

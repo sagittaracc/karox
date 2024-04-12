@@ -1,6 +1,7 @@
 <script type="text/javascript">
-    (function(global){
-        const scope = {
+    <?=$this->useScope() ? '(function(global){' : ''?>
+
+        const <?=$this->getScopeName()?> = {
             links: <?=json_encode($this->links)?>,
             vars: <?=json_encode($this->vars)?>,
             set: function (prop, value) {
@@ -19,6 +20,7 @@
             // TODO: Build scope of the nested components
         ?>
 
-        <?=$this->isWithoutScope() ? "global.{$this->getKey()} = scope;" : ''?>
-    })(window);
+        <?=$this->isGlobal() ? "global = global || window; global.{$this->getScopeName()} = {$this->getScopeName()};" : ''?>
+
+    <?=$this->useScope() ? '})(window);' : ''?>
 </script>

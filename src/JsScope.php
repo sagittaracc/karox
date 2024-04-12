@@ -13,8 +13,8 @@ trait JsScope
         return $this;
     }
 
-    public function isWithoutScope()
+    public function useScope()
     {
-        return $this->withScope === false;
+        return $this->withScope === true;
     }
 }
